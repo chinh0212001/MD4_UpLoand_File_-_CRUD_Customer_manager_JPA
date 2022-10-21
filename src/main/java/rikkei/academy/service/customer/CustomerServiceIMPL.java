@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import rikkei.academy.model.Customer;
 import rikkei.academy.repository.customerRepository.ICustomerRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CustomerServiceIMPL implements ICustomerService{
@@ -30,5 +31,17 @@ public class CustomerServiceIMPL implements ICustomerService{
     public void remove(Long id) {
         customerRepository.remove(id);
 
+    }
+
+    @Override
+    public List<Customer> search(String search) {
+        List<Customer>customerList = new ArrayList<>();
+        for (Customer c : findAll()) {
+            if (c.getFirstName().toLowerCase().contains(search.trim().toLowerCase())){
+                customerList.add(c);
+            }
+        }
+
+        return customerList;
     }
 }
